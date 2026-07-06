@@ -20,7 +20,7 @@ The model was rigorously tested, yielding highly stable results demonstrating po
 * **Valid Edge Detection Rate:** 96.86%[cite: 1].
 * **Lost Measurement Ratio:** Reduced to 3.14%[cite: 1].
 * **Average Execution Time:** 0.22 seconds per image[cite: 1].
-* **Near Limit Ratio:** 0.0000 (Proving the algorithm does not artificially truncate natural edge transitions)[cite: 1].
+* **Near Limit Ratio:** 0.00001 (Proving the algorithm does not artificially truncate natural edge transitions)[cite: 1].
 
 ## 👥 Project Developers
 * Mehmet Emir ÇEBİ[cite: 1]
