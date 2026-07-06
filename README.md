@@ -24,4 +24,6 @@ Tested on complex textured baselines (e.g., aircraft images with cloud transitio
 ## 👥 Project Developers
 * Duru ÇALIŞKAN
 *  Mehmet Emir ÇEBİ
+
+  
 Department of Electrical and Electronics Engineering, Faculty of Engineering, Ondokuz Mayıs University, Samsun, Turkey.
