@@ -24,4 +24,6 @@ Sistem, bulut ve katı cisim barındıran karmaşık dokulu referans görseller 
 ## 👥 Proje Geliştiricileri
 * Duru ÇALIŞKAN
 * Mehmet Emir ÇEBİ
+
+
 Elektrik Elektronik Mühendisliği, Mühendislik Fakültesi, Ondokuz Mayıs Üniversitesi, Samsun, Türkiye.
