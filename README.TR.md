@@ -1,24 +1,25 @@
 # Kenar Genişliğine Dayalı Referanssız Görüntü Netliği Ölçüm Modeli
 
 ## 📌 Proje Özeti
-Ondokuz Mayıs Üniversitesi bünyesinde akademik bir mühendislik projesi kapsamında geliştirilen bu çalışma, içeriğe duyarlı olmayan, referanssız ve kenar genişliği istatistiklerini temel alan, kullanıcı destekli bir netlik ölçüm modelidir[cite: 1]. Projenin detaylı metodolojisi ve analizleri makale formatında raporlanmıştır[cite: 1].
+Ondokuz Mayıs Üniversitesi bünyesinde akademik bir mühendislik projesi kapsamında geliştirilen bu çalışma, içeriğe duyarlı olmayan, referanssız ve kenar genişliği istatistiklerini temel alan netlik ölçüm modelidir[cite: 1]. Projenin algoritmik detayları makale formatında raporlanmıştır[cite: 1].
 
-> **Not:** Bu projenin kaynak kodları kapalı tutulmaktadır. Bu depo, geliştirilen mimarinin teorik altyapısını ve elde edilen istatistiksel performans çıktılarını sunmak amacıyla hazırlanmıştır.
+> **Not:** Bu projenin kaynak kodları kapalı tutulmaktadır. Bu depo, geliştirilen mimarinin matematiksel altyapısını ve elde edilen performans çıktılarını sunmak amacıyla hazırlanmıştır.
 
-## ⚙️ Metodoloji ve Teknolojiler
-Yazılım mimarisi, nesne yönelimli programlama (OOP) prensiplerine uygun olarak **C++17** standardında geliştirilmiş ve matris operasyonları için açık kaynak kodlu **OpenCV 4.8.0** kütüphanesi ile entegre edilmiştir[cite: 1].
+## ⚙️ Metodoloji ve Algoritmik Mimari
+Yazılım, nesne yönelimli programlama (OOP) prensiplerine uygun olarak **C++17** standardında geliştirilmiş ve açık kaynak kodlu **OpenCV 4.8.0** kütüphanesi ile entegre edilmiştir[cite: 1]. Bellek yönetimini optimize etmek amacıyla sistem durum verileri yapılandırılmış nesneler (encapsulation) içerisine alınmıştır[cite: 1].
 
-Geliştirilen özgün yapılar:
-* **Çift Eşikli Kenar Mimarisi:** Klasik histerezis eşiklemesi aşılarak, "Ana Kenar" ve "Aday Kenar" havuzlarını birbirinden ayıran, bağlı bileşen tabanlı ön işlem mimarisi geliştirilmiştir[cite: 1].
-* **Eğim Durmalı (Slope-Stop) Tarama:** Sabit mesafeli aramalar yerine, gri seviye profilinin anlık türevini izleyen Eğim Durmalı uç nokta tarama algoritması tasarlanmıştır[cite: 1].
-* **Tip 3 Parabolik Mesafe Faktörü:** Bulanıklığın etkilerini yansıtan basamak kenarları, Tip 3 Parabolik Mesafe Faktörü ile ağırlıklandırılarak nihai skor elde edilmiştir[cite: 1].
+Projenin temel algoritmik yapıtaşları şunlardır:
+* **Çift Eşikli Etkileşimli Ön İşlem:** Klasik histerezis eşiklemesi aşılarak, bağlı bileşen (connected component) analizi ile "Ana Kenar" ve "Aday Kenar" havuzları ayrıştırılmıştır[cite: 1]. Rastgele piksel üretimine izin vermeyen ROI (Region of Interest) tabanlı fırça modülü ile gürültülerin elenmesi sağlanmıştır[cite: 1].
+* **Sekiz Komşuluklu Yön Tayini:** Merkez kenar pikselleri etrafındaki $3\times3$ lokal matrisler üzerinden dikey, yatay ve çapraz eksenlerde mutlak gri seviye farkları hesaplanmıştır[cite: 1]. Minimum gradyan varyansını veren eksene dik açı, gerçek kenar yönü olarak atanmıştır[cite: 1].
+* **Eğim Durmalı (Slope-Stop) Tarama:** Atanan yön doğrultusunda (maksimum 30 piksel arama limitiyle) anlık birinci türev takibe alınmıştır[cite: 1]. Eğim durma koşulu (`tolSlope=0.001`) ve ayrışma kontrastı (`minContrast=0.003`) sağlandığı anda profil uç noktaları kilitlenerek gerçek kenar genişliği hesaplanmıştır[cite: 1].
+* **Tip 3 Parabolik Mesafe Ağırlıklandırması:** Ölçülen genişlikler 0.375 piksel (binWidth) hassasiyetle sepetlenerek baskın kenar genişliği ($w_{mp}$) tespit edilmiştir[cite: 1]. Histogram bileşenleri, monotonluk kararlılığı yüksek Tip 3 Parabolik Mesafe Faktörü ile ağırlıklandırılarak nihai nesnel netlik skoruna dönüştürülmüştür[cite: 1].
 
 ## 📊 Analiz Sonuçları
-Karmaşık dokulu görüntüler (örneğin uçak test görselleri) üzerindeki analizlerde sistem şu değerlere ulaşmıştır:
-* **Geçerli Kenar Ölçüm Oranı:** %96.86[cite: 1].
-* **Kayıp Ölçüm Oranı:** Geleneksel yöntemlere kıyasla %3.14 seviyesine indirilmiştir[cite: 1].
-* **Hesaplama Süresi:** Görüntü başına yalnızca 0.22 saniye (Endüstriyel gerçek zamanlı sistem standartlarına uygundur)[cite: 1].
-* **Sınıra Yaklaşma Oranı:** 0.00001[cite: 1].
+Sistem, bulut ve katı cisim barındıran karmaşık dokulu referans görseller üzerinde test edilmiş ve şu veriler elde edilmiştir:
+* **Geçerli Kenar Ölçüm Oranı:** %96.86 (Eğim durmalı motorun uç nokta kilitlenme başarısı)[cite: 1].
+* **Kayıp Ölçüm Oranı:** %3.14 (Gradyan süreksizliği nedeniyle elenen piksel oranı)[cite: 1].
+* **Hesaplama Süresi:** Görüntü başına 0.22 saniye (Endüstriyel gerçek zamanlı süreçlere uygun)[cite: 1].
+* **Sınıra Yaklaşma Oranı:** 0.0000 (Arama penceresinin doğal kenarları yapay olarak kırpmadığı kanıtlanmıştır)[cite: 1].
 
 ## 👥 Proje Geliştiricileri
 * Mehmet Emir ÇEBİ[cite: 1]
